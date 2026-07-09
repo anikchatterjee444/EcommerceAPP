@@ -14,3 +14,42 @@ model User {
   password  String
   createdAt DateTime @default(now())
 }
+
+model Product {
+  id                     Int      @id @default(autoincrement())
+  dummyJsonId            Int      @unique
+
+  title                  String
+  description            String
+
+  category               String
+  brand                  String?
+
+  sku                    String?
+
+  price                  Float
+  discountPercentage     Float?
+  rating                 Float?
+  stock                  Int
+
+  weight                 Float?
+
+  warrantyInformation    String?
+  shippingInformation    String?
+  availabilityStatus     String?
+  returnPolicy           String?
+  minimumOrderQuantity   Int?
+
+  thumbnail              String?
+
+  images                 String[]
+  tags                   String[]
+
+  createdAt              DateTime @default(now())
+  updatedAt              DateTime @updatedAt
+
+  @@index([category])
+  @@index([brand])
+  @@index([price])
+  @@index([rating])
+}
