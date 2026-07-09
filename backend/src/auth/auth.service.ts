@@ -1,4 +1,5 @@
 import { ConflictException, Injectable, UnauthorizedException } from '@nestjs/common';
+import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
 import { UsersService } from '../users/users.service';
 import { LoginDto } from './dto/login.dto';
@@ -11,7 +12,10 @@ export class AuthService {
   // AuthService never imports PrismaService directly. It only
   // knows about UsersService — this keeps the persistence layer
   // swappable and keeps a single source of truth for User queries.
-  constructor(private readonly usersService: UsersService) {}
+  constructor(
+    private readonly usersService: UsersService,
+    private readonly jwtService: JwtService,
+  ) {}
 
   async login(dto: LoginDto) {
     const user = await this.usersService.findByEmail(dto.email);
@@ -24,11 +28,11 @@ export class AuthService {
       throw new UnauthorizedException('Invalid email or password');
     }
 
-    const { password, ...safeUser } = user;
+    const payload = { sub: user.id, email: user.email };
+    const accessToken = await this.jwtService.signAsync(payload);
 
     return {
-      message: 'Login successful',
-      user: safeUser,
+      access_token: accessToken,
     };
   }
 

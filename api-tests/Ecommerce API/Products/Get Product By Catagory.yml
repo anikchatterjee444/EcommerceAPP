@@ -5,7 +5,11 @@ info:
 
 http:
   method: GET
-  url: http://localhost:3000/products/category/smartphones
+  url: http://localhost:3000/products?category=smartphones
+  params:
+    - name: category
+      value: smartphones
+      type: query
   auth: inherit
 
 settings:

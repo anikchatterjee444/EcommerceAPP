@@ -5,9 +5,9 @@ info:
 
 http:
   method: GET
-  url: http://localhost:3000/products/search?q=phone
+  url: http://localhost:3000/products?search=phone
   params:
-    - name: q
+    - name: search
       value: phone
       type: query
   auth: inherit
