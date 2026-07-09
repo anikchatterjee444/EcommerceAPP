@@ -3,7 +3,9 @@ import {
     Logger,
     NotFoundException,
 } from '@nestjs/common';
+import { Prisma, PrismaClient } from '@prisma/client';
 import { PrismaService } from '../prisma/prisma.service';
+import { GetProductsDto } from './dto/get-products.dto';
 
 @Injectable()
 export class ProductsService {
@@ -71,12 +73,88 @@ export class ProductsService {
         this.logger.log(`Skipped: ${skipped}`);
     }
 
-    async findAll() {
-        return this.prisma.product.findMany({
-            orderBy: {
-                id: 'asc',
+    async findAll(query: GetProductsDto) {
+        const {
+            page = 1,
+            limit = 10,
+            q,
+            category,
+            minPrice,
+            maxPrice,
+            sort = 'id',
+            order = 'asc',
+        } = query;
+
+        const where: Prisma.ProductWhereInput = {};
+
+        if (q) {
+            where.OR = [
+                {
+                    title: {
+                        contains: q,
+                        mode: 'insensitive',
+                    },
+                },
+                {
+                    description: {
+                        contains: q,
+                        mode: 'insensitive',
+                    },
+                },
+                {
+                    brand: {
+                        contains: q,
+                        mode: 'insensitive',
+                    },
+                },
+            ];
+        }
+
+        if (category) {
+            where.category = {
+                equals: category,
+                mode: 'insensitive',
+            };
+        }
+
+        if (minPrice !== undefined || maxPrice !== undefined) {
+            where.price = {};
+
+            if (minPrice !== undefined) {
+                where.price.gte = minPrice;
+            }
+
+            if (maxPrice !== undefined) {
+                where.price.lte = maxPrice;
+            }
+        }
+
+        const skip = (page - 1) * limit;
+
+        const [products, total] = await this.prisma.$transaction([
+            this.prisma.product.findMany({
+                where,
+                skip,
+                take: limit,
+                orderBy: {
+                    [sort]: order,
+                },
+            }),
+
+            this.prisma.product.count({
+                where,
+            }),
+        ]);
+
+        return {
+            data: products,
+            pagination: {
+                total,
+                page,
+                limit,
+                totalPages: Math.ceil(total / limit),
             },
-        });
+        };
     }
 
     async findById(id: number) {
@@ -91,49 +169,5 @@ export class ProductsService {
         }
 
         return product;
-    }
-
-    async search(query: string) {
-        return this.prisma.product.findMany({
-            where: {
-                OR: [
-                    {
-                        title: {
-                            contains: query,
-                            mode: 'insensitive',
-                        },
-                    },
-                    {
-                        description: {
-                            contains: query,
-                            mode: 'insensitive',
-                        },
-                    },
-                    {
-                        brand: {
-                            contains: query,
-                            mode: 'insensitive',
-                        },
-                    },
-                ],
-            },
-            orderBy: {
-                id: 'asc',
-            },
-        });
-    }
-
-    async findByCategory(category: string) {
-        return this.prisma.product.findMany({
-            where: {
-                category: {
-                    equals: category,
-                    mode: 'insensitive',
-                },
-            },
-            orderBy: {
-                id: 'asc',
-            },
-        });
     }
 }
