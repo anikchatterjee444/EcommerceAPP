@@ -1,4 +1,8 @@
-import { Injectable, Logger } from '@nestjs/common';
+import {
+    Injectable,
+    Logger,
+    NotFoundException,
+} from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 
 @Injectable()
@@ -17,7 +21,6 @@ export class ProductsService {
         }
 
         const data = await response.json();
-
         const products = data.products;
 
         this.logger.log(`Found ${products.length} products.`);
@@ -66,5 +69,71 @@ export class ProductsService {
 
         this.logger.log(`Imported: ${imported}`);
         this.logger.log(`Skipped: ${skipped}`);
+    }
+
+    async findAll() {
+        return this.prisma.product.findMany({
+            orderBy: {
+                id: 'asc',
+            },
+        });
+    }
+
+    async findById(id: number) {
+        const product = await this.prisma.product.findUnique({
+            where: {
+                id,
+            },
+        });
+
+        if (!product) {
+            throw new NotFoundException('Product not found');
+        }
+
+        return product;
+    }
+
+    async search(query: string) {
+        return this.prisma.product.findMany({
+            where: {
+                OR: [
+                    {
+                        title: {
+                            contains: query,
+                            mode: 'insensitive',
+                        },
+                    },
+                    {
+                        description: {
+                            contains: query,
+                            mode: 'insensitive',
+                        },
+                    },
+                    {
+                        brand: {
+                            contains: query,
+                            mode: 'insensitive',
+                        },
+                    },
+                ],
+            },
+            orderBy: {
+                id: 'asc',
+            },
+        });
+    }
+
+    async findByCategory(category: string) {
+        return this.prisma.product.findMany({
+            where: {
+                category: {
+                    equals: category,
+                    mode: 'insensitive',
+                },
+            },
+            orderBy: {
+                id: 'asc',
+            },
+        });
     }
 }
