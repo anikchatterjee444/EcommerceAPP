@@ -1,0 +1,34 @@
+info:
+  name: All Combined
+  type: http
+  seq: 8
+
+http:
+  method: GET
+  url: http://localhost:3000/products?q=phone&category=smartphones&page=1&limit=5&sort=price&order=asc
+  params:
+    - name: q
+      value: phone
+      type: query
+    - name: category
+      value: smartphones
+      type: query
+    - name: page
+      value: "1"
+      type: query
+    - name: limit
+      value: "5"
+      type: query
+    - name: sort
+      value: price
+      type: query
+    - name: order
+      value: asc
+      type: query
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
