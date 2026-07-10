@@ -115,4 +115,43 @@ export class CartService {
 
     return { message: 'Cart updated successfully' };
   }
+
+  async removeItem(userId: number, productId: number) {
+    const cart = await this.prisma.cart.findUnique({
+      where: { userId },
+    });
+
+    if (!cart) {
+      throw new NotFoundException('Cart not found');
+    }
+
+    const cartItem = await this.prisma.cartItem.findUnique({
+      where: {
+        cartId_productId: {
+          cartId: cart.id,
+          productId,
+        },
+      },
+    });
+
+    if (!cartItem) {
+      throw new NotFoundException('Cart item not found');
+    }
+
+    await this.prisma.cartItem.delete({
+      where: { id: cartItem.id },
+    });
+
+    const remainingItems = await this.prisma.cartItem.count({
+      where: { cartId: cart.id },
+    });
+
+    if (remainingItems === 0) {
+      await this.prisma.cart.delete({
+        where: { id: cart.id },
+      });
+    }
+
+    return { message: 'Item removed from cart' };
+  }
 }

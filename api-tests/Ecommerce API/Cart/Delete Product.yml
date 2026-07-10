@@ -1,0 +1,17 @@
+info:
+  name: Delete Product
+  type: http
+  seq: 4
+
+http:
+  method: DELETE
+  url: http://localhost:3000/cart/items/1
+  auth:
+    type: bearer
+    token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjIsImVtYWlsIjoiYW5pazJAZXhhbXBsZS5jb20iLCJpYXQiOjE3ODM2ODExMzUsImV4cCI6MTc4Mzc2NzUzNX0.bwOlSBJ2A_IkpMz5aLEo7sRIVlOnaUDsO0mSnz47WBE
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

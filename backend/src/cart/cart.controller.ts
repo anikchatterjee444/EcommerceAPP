@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, ParseIntPipe, Patch, Post, Req, UseGuards } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, ParseIntPipe, Patch, Post, Req, UseGuards } from '@nestjs/common';
 import type { Request } from 'express';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { CartService } from './cart.service';
@@ -32,5 +32,15 @@ export class CartController {
   ) {
     const userId = (req.user as any).userId;
     return this.cartService.updateItem(userId, productId, dto);
+  }
+
+  @Delete('items/:productId')
+  @UseGuards(JwtAuthGuard)
+  removeItem(
+    @Req() req: Request,
+    @Param('productId', ParseIntPipe) productId: number,
+  ) {
+    const userId = (req.user as any).userId;
+    return this.cartService.removeItem(userId, productId);
   }
 }
