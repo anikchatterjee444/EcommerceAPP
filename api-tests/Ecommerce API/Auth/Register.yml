@@ -10,10 +10,16 @@ http:
     type: json
     data: |-
       {
+        "name": "Cart Test",
+        "email": "carttest@example.com",
+        "password": "password123"
+      }
+
+      /*{
         "name": "Anik",
         "email": "anik2@example.com",
         "password": "password123"
-      }
+      }*/
   auth: inherit
 
 settings:

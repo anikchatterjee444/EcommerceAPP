@@ -8,7 +8,7 @@ http:
   url: http://localhost:3000/cart
   auth:
     type: bearer
-    token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjIsImVtYWlsIjoiYW5pazJAZXhhbXBsZS5jb20iLCJpYXQiOjE3ODM2NzY4MjIsImV4cCI6MTc4Mzc2MzIyMn0.eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjMsImVtYWlsIjoiY2FydHRlc3RAZXhhbXBsZS5jb20iLCJpYXQiOjE3ODM2NzkyMjMsImV4cCI6MTc4Mzc2NTYyM30.C5zqx0mVMyNJ5etA2M-CDl3d56dZDLMOKjchOgcm-bc
+    token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjIsImVtYWlsIjoiYW5pazJAZXhhbXBsZS5jb20iLCJpYXQiOjE3ODM2ODA0NzksImV4cCI6MTc4Mzc2Njg3OX0.ygChAdabf1Pp63MFzl0lpLcW5n-iJdKBpqHqXTdg8tg
 
 settings:
   encodeUrl: true
