@@ -1,6 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { INestApplication, ValidationPipe } from '@nestjs/common';
-import * as request from 'supertest';
+import request from 'supertest';
 import { AppModule } from '../src/app.module';
 
 describe('AuthController (e2e)', () => {
@@ -37,19 +37,19 @@ describe('AuthController (e2e)', () => {
 
     await request(app.getHttpServer())
       .post('/auth/register')
-      .send({ email, password: 'supersecret123' })
+      .send({ email, password: 'supersecret123', name: 'Duplicate User' })
       .expect(201);
 
     await request(app.getHttpServer())
       .post('/auth/register')
-      .send({ email, password: 'anotherpassword' })
+      .send({ email, password: 'anotherpassword', name: 'Duplicate User' })
       .expect(409);
   });
 
   it('rejects a password shorter than 8 characters', async () => {
     await request(app.getHttpServer())
       .post('/auth/register')
-      .send({ email: 'short@example.com', password: '123' })
+      .send({ email: 'short@example.com', password: '123', name: 'Short Password User' })
       .expect(400);
   });
 });
