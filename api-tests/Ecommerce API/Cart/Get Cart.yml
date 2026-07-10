@@ -1,0 +1,17 @@
+info:
+  name: Get Cart
+  type: http
+  seq: 2
+
+http:
+  method: GET
+  url: http://localhost:3000/cart
+  auth:
+    type: bearer
+    token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjIsImVtYWlsIjoiYW5pazJAZXhhbXBsZS5jb20iLCJpYXQiOjE3ODM2NzY4MjIsImV4cCI6MTc4Mzc2MzIyMn0.eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjMsImVtYWlsIjoiY2FydHRlc3RAZXhhbXBsZS5jb20iLCJpYXQiOjE3ODM2NzkyMjMsImV4cCI6MTc4Mzc2NTYyM30.C5zqx0mVMyNJ5etA2M-CDl3d56dZDLMOKjchOgcm-bc
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

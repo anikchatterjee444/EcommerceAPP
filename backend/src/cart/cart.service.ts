@@ -6,6 +6,39 @@ import { AddCartItemDto } from './dto/add-cart-item.dto';
 export class CartService {
   constructor(private readonly prisma: PrismaService) {}
 
+  async getCart(userId: number) {
+    const cart = await this.prisma.cart.findUnique({
+      where: { userId },
+      include: {
+        items: {
+          include: { product: true },
+        },
+      },
+    });
+
+    if (!cart || cart.items.length === 0) {
+      return { items: [], totalItems: 0, totalPrice: 0 };
+    }
+
+    const items = cart.items.map((item) => {
+      const price = item.product.price;
+
+      return {
+        productId: item.product.id,
+        title: item.product.title,
+        price,
+        quantity: item.quantity,
+        subtotal: price * item.quantity,
+        thumbnail: item.product.thumbnail,
+      };
+    });
+
+    const totalItems = items.reduce((sum, item) => sum + item.quantity, 0);
+    const totalPrice = items.reduce((sum, item) => sum + item.subtotal, 0);
+
+    return { items, totalItems, totalPrice };
+  }
+
   async addItem(userId: number, dto: AddCartItemDto) {
     const product = await this.prisma.product.findUnique({
       where: { id: dto.productId },

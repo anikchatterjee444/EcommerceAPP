@@ -9,6 +9,11 @@ http:
   body:
     type: json
     data: |-
+      /*{
+        "email": "carttest@example.com",
+        "password": "password123"
+      }*/
+
       {
         "email": "anik2@example.com",
         "password": "password123"
