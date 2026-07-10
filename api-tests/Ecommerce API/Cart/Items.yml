@@ -1,0 +1,27 @@
+info:
+  name: Items
+  type: http
+  seq: 1
+
+http:
+  method: POST
+  url: http://localhost:3000/cart/items
+  headers:
+    - name: Authorization
+      value: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjIsImVtYWlsIjoiYW5pazJAZXhhbXBsZS5jb20iLCJpYXQiOjE3ODM2NzQ5NzEsImV4cCI6MTc4Mzc2MTM3MX0.6msD7wuVBkqO59AVtXSUmQOaSLdxJ5wVILE1MEDTGyM
+    - name: Content-Type
+      value: application/json
+  body:
+    type: json
+    data: |-
+      {
+        "productId": 1,
+        "quantity": 2
+      }
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
