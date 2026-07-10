@@ -9,10 +9,10 @@ http:
   body:
     type: json
     data: |-
-      /*{
+      {
         "email": "anik2@example.com",
         "password": "password123"
-      }*/
+      }
 
       /*{
         "email": "anik2@example.com",
@@ -24,7 +24,7 @@ http:
         "password":"password123"
       }*/
 
-      {}
+      //{}
   auth: inherit
 
 settings:
