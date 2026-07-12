@@ -15,10 +15,12 @@ http:
     type: json
     data: |-
       {
-        "productId": 1,
+        "productId": 5,
         "quantity": 2
       }
-  auth: inherit
+  auth:
+    type: bearer
+    token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjIsImVtYWlsIjoiYW5pazJAZXhhbXBsZS5jb20iLCJpYXQiOjE3ODM2ODY1MjYsImV4cCI6MTc4Mzc3MjkyNn0.P4Mb341I34R8L_lDQ430OSHmzZafXUoctNXa-MVWA-E
 
 settings:
   encodeUrl: true

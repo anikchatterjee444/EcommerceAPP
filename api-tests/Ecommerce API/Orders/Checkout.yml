@@ -5,8 +5,10 @@ info:
 
 http:
   method: POST
-  url: ""
-  auth: inherit
+  url: http://localhost:3000/orders/checkout
+  auth:
+    type: bearer
+    token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjcsImVtYWlsIjoieHl6QGdtYWlsLmNvbSIsImlhdCI6MTc4Mzg0Mzc3NSwiZXhwIjoxNzgzOTMwMTc1fQ.NJn5KaPBYSL5-wBjvE0UDBnKBoGq8cRg974j_d63hKc
 
 settings:
   encodeUrl: true

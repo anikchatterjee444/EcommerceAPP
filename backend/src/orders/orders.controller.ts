@@ -1,5 +1,6 @@
 import {
     Controller,
+    Get,
     Post,
     Req,
     UseGuards,
@@ -12,6 +13,13 @@ import { OrdersService } from './orders.service';
 @Controller('orders')
 export class OrdersController {
     constructor(private readonly ordersService: OrdersService) { }
+
+    @Get()
+    @UseGuards(JwtAuthGuard)
+    findAll(@Req() req: Request) {
+        const userId = (req.user as any).userId;
+        return this.ordersService.findAllByUser(userId);
+    }
 
     @Post('checkout')
     @UseGuards(JwtAuthGuard)

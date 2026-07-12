@@ -9,6 +9,28 @@ import { PrismaService } from '../prisma/prisma.service';
 export class OrdersService {
     constructor(private readonly prisma: PrismaService) { }
 
+    async findAllByUser(userId: number) {
+        return this.prisma.order.findMany({
+            where: { userId },
+            orderBy: { createdAt: 'desc' },
+            include: {
+                items: {
+                    select: {
+                        quantity: true,
+                        price: true,
+                        product: {
+                            select: {
+                                id: true,
+                                title: true,
+                                thumbnail: true,
+                            },
+                        },
+                    },
+                },
+            },
+        });
+    }
+
     async checkout(userId: number) {
         const cart = await this.prisma.cart.findUnique({
             where: { userId },

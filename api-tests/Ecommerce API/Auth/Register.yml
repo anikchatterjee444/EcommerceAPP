@@ -8,18 +8,24 @@ http:
   url: http://localhost:3000/auth/register
   body:
     type: json
-    data: |-
-      {
+    data: |
+      /*{
         "name": "Cart Test",
         "email": "carttest@example.com",
         "password": "password123"
-      }
+      }*/
 
       /*{
         "name": "Anik",
         "email": "anik2@example.com",
         "password": "password123"
       }*/
+
+      {
+        "name":"xyz",
+        "email":"xyz@gmail.com",
+        "password":"password123"
+      }
   auth: inherit
 
 settings:
