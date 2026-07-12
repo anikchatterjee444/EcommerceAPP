@@ -1,6 +1,8 @@
 import {
     Controller,
     Get,
+    Param,
+    ParseIntPipe,
     Post,
     Req,
     UseGuards,
@@ -19,6 +21,16 @@ export class OrdersController {
     findAll(@Req() req: Request) {
         const userId = (req.user as any).userId;
         return this.ordersService.findAllByUser(userId);
+    }
+
+    @Get(':id')
+    @UseGuards(JwtAuthGuard)
+    findOne(
+        @Req() req: Request,
+        @Param('id', ParseIntPipe) id: number,
+    ) {
+        const userId = (req.user as any).userId;
+        return this.ordersService.findOneByUser(id, userId);
     }
 
     @Post('checkout')

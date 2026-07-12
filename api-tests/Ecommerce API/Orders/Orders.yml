@@ -5,10 +5,10 @@ info:
 
 http:
   method: GET
-  url: http://localhost:3000/orders
+  url: http://localhost:3000/orders/1
   auth:
     type: bearer
-    token: '"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjcsImVtYWlsIjoieHl6QGdtYWlsLmNvbSIsImlhdCI6MTc4Mzg0Mzc0MSwiZXhwIjoxNzgzOTMwMTQxfQ.xhKA6NYQln6dS3EfhflZ1R1IlVkJhgTZHi8xs37RR2I'
+    token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjIsImVtYWlsIjoiYW5pazJAZXhhbXBsZS5jb20iLCJpYXQiOjE3ODM4NDQyNDMsImV4cCI6MTc4MzkzMDY0M30.ZaAckBHwkzYfyn3wo17Qroi9hbkFfi9K4dksKzZnXlA
 
 settings:
   encodeUrl: true

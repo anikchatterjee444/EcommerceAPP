@@ -9,6 +9,40 @@ import { PrismaService } from '../prisma/prisma.service';
 export class OrdersService {
     constructor(private readonly prisma: PrismaService) { }
 
+    async findOneByUser(orderId: number, userId: number) {
+        const order = await this.prisma.order.findFirst({
+            where: {
+                id: orderId,
+                userId,
+            },
+            select: {
+                id: true,
+                totalAmount: true,
+                status: true,
+                createdAt: true,
+                items: {
+                    select: {
+                        quantity: true,
+                        price: true,
+                        product: {
+                            select: {
+                                id: true,
+                                title: true,
+                                thumbnail: true,
+                            },
+                        },
+                    },
+                },
+            },
+        });
+
+        if (!order) {
+            throw new NotFoundException('Order not found');
+        }
+
+        return order;
+    }
+
     async findAllByUser(userId: number) {
         return this.prisma.order.findMany({
             where: { userId },
