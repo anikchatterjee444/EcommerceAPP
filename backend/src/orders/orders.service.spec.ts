@@ -132,7 +132,11 @@ describe('OrdersService', () => {
   });
 
   it('should throw BadRequestException if cart is empty', async () => {
-    prismaMock.cart.findUnique.mockResolvedValue({ id: 1, userId: 42, items: [] });
+    prismaMock.cart.findUnique.mockResolvedValue({
+      id: 1,
+      userId: 42,
+      items: [],
+    });
 
     await expect(service.checkout(42)).rejects.toThrow(BadRequestException);
   });

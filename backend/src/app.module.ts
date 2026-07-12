@@ -18,9 +18,9 @@ import { OrdersModule } from './orders/orders.module';
     AuthModule,
     ProductsModule,
     CartModule,
-    OrdersModule
+    OrdersModule,
   ],
   controllers: [AppController],
   providers: [AppService],
 })
-export class AppModule { }
+export class AppModule {}

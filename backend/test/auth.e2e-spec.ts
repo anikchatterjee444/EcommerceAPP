@@ -12,7 +12,9 @@ describe('AuthController (e2e)', () => {
     }).compile();
 
     app = moduleFixture.createNestApplication();
-    app.useGlobalPipes(new ValidationPipe({ whitelist: true, transform: true }));
+    app.useGlobalPipes(
+      new ValidationPipe({ whitelist: true, transform: true }),
+    );
     await app.init();
   });
 
@@ -49,7 +51,11 @@ describe('AuthController (e2e)', () => {
   it('rejects a password shorter than 8 characters', async () => {
     await request(app.getHttpServer())
       .post('/auth/register')
-      .send({ email: 'short@example.com', password: '123', name: 'Short Password User' })
+      .send({
+        email: 'short@example.com',
+        password: '123',
+        name: 'Short Password User',
+      })
       .expect(400);
   });
 });

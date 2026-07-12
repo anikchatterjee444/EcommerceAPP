@@ -1,11 +1,11 @@
 import {
-    Controller,
-    Get,
-    Param,
-    ParseIntPipe,
-    Post,
-    Req,
-    UseGuards,
+  Controller,
+  Get,
+  Param,
+  ParseIntPipe,
+  Post,
+  Req,
+  UseGuards,
 } from '@nestjs/common';
 import type { Request } from 'express';
 
@@ -14,29 +14,26 @@ import { OrdersService } from './orders.service';
 
 @Controller('orders')
 export class OrdersController {
-    constructor(private readonly ordersService: OrdersService) { }
+  constructor(private readonly ordersService: OrdersService) {}
 
-    @Get()
-    @UseGuards(JwtAuthGuard)
-    findAll(@Req() req: Request) {
-        const userId = (req.user as any).userId;
-        return this.ordersService.findAllByUser(userId);
-    }
+  @Get()
+  @UseGuards(JwtAuthGuard)
+  findAll(@Req() req: Request) {
+    const userId = (req.user as any).userId;
+    return this.ordersService.findAllByUser(userId);
+  }
 
-    @Get(':id')
-    @UseGuards(JwtAuthGuard)
-    findOne(
-        @Req() req: Request,
-        @Param('id', ParseIntPipe) id: number,
-    ) {
-        const userId = (req.user as any).userId;
-        return this.ordersService.findOneByUser(id, userId);
-    }
+  @Get(':id')
+  @UseGuards(JwtAuthGuard)
+  findOne(@Req() req: Request, @Param('id', ParseIntPipe) id: number) {
+    const userId = (req.user as any).userId;
+    return this.ordersService.findOneByUser(id, userId);
+  }
 
-    @Post('checkout')
-    @UseGuards(JwtAuthGuard)
-    checkout(@Req() req: Request) {
-        const userId = (req.user as any).userId;
-        return this.ordersService.checkout(userId);
-    }
+  @Post('checkout')
+  @UseGuards(JwtAuthGuard)
+  checkout(@Req() req: Request) {
+    const userId = (req.user as any).userId;
+    return this.ordersService.checkout(userId);
+  }
 }
