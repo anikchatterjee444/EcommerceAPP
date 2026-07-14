@@ -50,6 +50,11 @@ export default function Navbar() {
                     Orders
                   </Link>
                 </li>
+                <li className="nav-item">
+                  <Link className={isActive("/profile")} href="/profile">
+                    Profile
+                  </Link>
+                </li>
               </>
             )}
             {!loading &&
