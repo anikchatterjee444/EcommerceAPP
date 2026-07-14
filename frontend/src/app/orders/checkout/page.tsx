@@ -8,6 +8,7 @@ import { getCart } from "@/services/cart";
 import { checkout } from "@/services/order";
 import type { Cart } from "@/types/cart";
 import ProtectedRoute from "@/components/ProtectedRoute";
+import axios from "axios";
 
 export default function CheckoutPage() {
   return (
@@ -59,9 +60,17 @@ function CheckoutContent() {
         router.push("/orders");
       }, 1000);
     } catch (err: unknown) {
-      const message =
-        err instanceof Error ? err.message : "Failed to place order";
-      toast.error(message);
+      if (axios.isAxiosError(err)) {
+        if (err.response?.status === 401) {
+          router.push("/login");
+          return;
+        }
+        const message =
+          err.response?.data?.message || "Failed to place order";
+        toast.error(message);
+      } else {
+        toast.error("Failed to place order");
+      }
       setPlacing(false);
     }
   };
