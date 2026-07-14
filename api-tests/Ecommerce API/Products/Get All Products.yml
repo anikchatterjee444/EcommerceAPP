@@ -6,7 +6,8 @@ info:
 http:
   method: GET
   url: http://localhost:3000/products
-  auth: inherit
+  auth:
+    type: bearer
 
 settings:
   encodeUrl: true
