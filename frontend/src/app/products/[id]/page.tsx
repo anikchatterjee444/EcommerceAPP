@@ -2,7 +2,9 @@
 
 import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
+import { toast } from "react-toastify";
 import { getProductById } from "@/services/product";
+import { addToCart } from "@/services/cart";
 import type { Product } from "@/types/product";
 
 export default function ProductDetailPage() {
@@ -13,6 +15,7 @@ export default function ProductDetailPage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [quantity, setQuantity] = useState(1);
+  const [adding, setAdding] = useState(false);
 
   useEffect(() => {
     if (!id) return;
@@ -70,6 +73,20 @@ export default function ProductDetailPage() {
     product.discountPercentage && product.discountPercentage > 0
       ? product.price * (1 - product.discountPercentage / 100)
       : null;
+
+  const handleAddToCart = async () => {
+    setAdding(true);
+    try {
+      await addToCart(product.id, quantity);
+      toast.success("Product added to cart");
+    } catch (err: unknown) {
+      const message =
+        err instanceof Error ? err.message : "Failed to add product to cart";
+      toast.error(message);
+    } finally {
+      setAdding(false);
+    }
+  };
 
   return (
     <div className="row g-4">
@@ -181,9 +198,10 @@ export default function ProductDetailPage() {
 
         <button
           className="btn btn-success btn-lg w-100 mt-4"
-          disabled={outOfStock}
+          disabled={outOfStock || adding}
+          onClick={handleAddToCart}
         >
-          {outOfStock ? "Out of Stock" : "Add To Cart"}
+          {outOfStock ? "Out of Stock" : adding ? "Adding..." : "Add To Cart"}
         </button>
       </div>
     </div>
