@@ -2,12 +2,12 @@ export default function Footer() {
   const year = new Date().getFullYear();
 
   return (
-    <footer className="bg-dark text-light py-4 mt-auto">
+    <footer className="footer">
       <div className="container">
         <div className="row g-4">
           <div className="col-md-4">
             <h5 className="mb-3">E-Commerce</h5>
-            <p className="text-white-50 small">
+            <p className="small mb-0" style={{ opacity: 0.65 }}>
               A full-stack e-commerce platform built for the MCA final project.
             </p>
           </div>
@@ -16,7 +16,15 @@ export default function Footer() {
             <div className="d-flex flex-wrap gap-2">
               {["Next.js", "NestJS", "Prisma", "PostgreSQL", "TypeScript", "Bootstrap", "JWT", "Docker"].map(
                 (t) => (
-                  <span key={t} className="badge bg-secondary">
+                  <span
+                    key={t}
+                    className="badge"
+                    style={{
+                      backgroundColor: "rgba(255,255,255,0.12)",
+                      color: "rgba(255,255,255,0.8)",
+                      fontWeight: 500,
+                    }}
+                  >
                     {t}
                   </span>
                 ),
@@ -29,19 +37,19 @@ export default function Footer() {
                 href="https://github.com"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-white-50 text-decoration-none"
+                className="text-decoration-none"
               >
                 <i className="bi bi-github me-1" />
                 GitHub
               </a>
             </p>
-            <p className="text-white-50 small mb-0">
+            <p className="small mb-0" style={{ opacity: 0.5 }}>
               Made by Anik Chatterjee
             </p>
           </div>
         </div>
-        <hr className="border-secondary" />
-        <p className="text-center text-white-50 small mb-0">
+        <hr className="border-secondary opacity-25 my-3" />
+        <p className="text-center small mb-0" style={{ opacity: 0.5 }}>
           &copy; {year} E-Commerce. All rights reserved.
         </p>
       </div>

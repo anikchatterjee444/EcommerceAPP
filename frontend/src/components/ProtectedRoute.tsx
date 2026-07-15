@@ -20,10 +20,11 @@ export default function ProtectedRoute({
 
   if (loading) {
     return (
-      <div className="d-flex justify-content-center align-items-center py-5">
+      <div className="d-flex flex-column justify-content-center align-items-center py-5 gap-3">
         <div className="spinner-border" role="status">
           <span className="visually-hidden">Loading...</span>
         </div>
+        <span className="text-muted small">Loading...</span>
       </div>
     );
   }

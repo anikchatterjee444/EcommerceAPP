@@ -59,31 +59,25 @@ function ProfileContent() {
 
   if (loading) {
     return (
-      <div className="d-flex justify-content-center py-5">
+      <div className="d-flex flex-column justify-content-center align-items-center py-5 gap-3">
         <div className="spinner-border" role="status">
           <span className="visually-hidden">Loading...</span>
         </div>
+        <span className="text-muted small">Loading profile...</span>
       </div>
     );
   }
 
   return (
-    <div className="row g-4">
+    <div className="row g-4 animate-fade-in">
       <div className="col-lg-8">
         <h1 className="mb-4">My Profile</h1>
 
+        {/* Profile Header Card */}
         <div className="card mb-4">
           <div className="card-body">
             <div className="d-flex align-items-center gap-4">
-              <div
-                className="rounded-circle d-flex align-items-center justify-content-center text-white fw-bold"
-                style={{
-                  width: "80px",
-                  height: "80px",
-                  fontSize: "2rem",
-                  backgroundColor: "#0d6efd",
-                }}
-              >
+              <div className="profile-avatar">
                 {initials}
               </div>
               <div>
@@ -98,22 +92,30 @@ function ProfileContent() {
           <div className="col-md-6">
             <div className="card h-100">
               <div className="card-body">
-                <h5 className="card-title">Account Information</h5>
+                <h6 className="card-title fw-semibold mb-3">
+                  <i className="bi bi-person-lines-fill text-primary me-2"></i>
+                  Account Information
+                </h6>
                 <ul className="list-unstyled mb-0">
-                  <li className="mb-2">
-                    <strong>Name:</strong> {user?.name || "N/A"}
+                  <li className="mb-2 d-flex justify-content-between">
+                    <span className="text-muted">Name</span>
+                    <span className="fw-medium">{user?.name || "N/A"}</span>
                   </li>
-                  <li className="mb-2">
-                    <strong>Email:</strong> {user?.email}
+                  <li className="mb-2 d-flex justify-content-between">
+                    <span className="text-muted">Email</span>
+                    <span className="fw-medium">{user?.email}</span>
                   </li>
-                  <li className="mb-2">
-                    <strong>User ID:</strong> {user?.id}
+                  <li className="mb-2 d-flex justify-content-between">
+                    <span className="text-muted">User ID</span>
+                    <span className="fw-medium">{user?.id}</span>
                   </li>
-                  <li>
-                    <strong>Joined:</strong>{" "}
-                    {user?.createdAt
-                      ? new Date(user.createdAt).toLocaleDateString()
-                      : "N/A"}
+                  <li className="d-flex justify-content-between">
+                    <span className="text-muted">Joined</span>
+                    <span className="fw-medium">
+                      {user?.createdAt
+                        ? new Date(user.createdAt).toLocaleDateString()
+                        : "N/A"}
+                    </span>
                   </li>
                 </ul>
               </div>
@@ -123,11 +125,16 @@ function ProfileContent() {
           <div className="col-md-6">
             <div className="card h-100">
               <div className="card-body">
-                <h5 className="card-title">Recent Activity</h5>
+                <h6 className="card-title fw-semibold mb-3">
+                  <i className="bi bi-graph-up text-primary me-2"></i>
+                  Recent Activity
+                </h6>
                 <ul className="list-unstyled mb-0">
-                  <li className="mb-2">
-                    <strong>Orders Placed:</strong>{" "}
-                    {orderCount !== null ? orderCount : "N/A"}
+                  <li className="d-flex justify-content-between">
+                    <span className="text-muted">Orders Placed</span>
+                    <span className="fw-bold fs-5">
+                      {orderCount !== null ? orderCount : "N/A"}
+                    </span>
                   </li>
                 </ul>
               </div>
@@ -136,9 +143,12 @@ function ProfileContent() {
 
           <div className="col-12">
             <div className="card">
-              <div className="card-body">
-                <h5 className="card-title">Authentication Status</h5>
-                <span className="badge bg-success fs-6">
+              <div className="card-body d-flex align-items-center justify-content-between">
+                <h6 className="card-title fw-semibold mb-0">
+                  <i className="bi bi-shield-check text-success me-2"></i>
+                  Authentication Status
+                </h6>
+                <span className="badge bg-success" style={{ fontSize: "0.8rem", padding: "0.4em 0.8em" }}>
                   Authenticated
                 </span>
               </div>
@@ -148,25 +158,25 @@ function ProfileContent() {
       </div>
 
       <div className="col-lg-4">
-        <div className="card sticky-top" style={{ top: "80px" }}>
+        <div className="order-summary-card sticky-top" style={{ top: "80px" }}>
           <div className="card-body d-flex flex-column gap-2">
             <Link
               href="/products"
               className="btn btn-primary w-100"
             >
-              Continue Shopping
+              <i className="bi bi-bag me-1"></i> Continue Shopping
             </Link>
             <Link
               href="/orders"
               className="btn btn-outline-primary w-100"
             >
-              View Orders
+              <i className="bi bi-receipt me-1"></i> View Orders
             </Link>
             <button
               className="btn btn-outline-danger w-100"
               onClick={handleLogout}
             >
-              Logout
+              <i className="bi bi-box-arrow-right me-1"></i> Logout
             </button>
           </div>
         </div>

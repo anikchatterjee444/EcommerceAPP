@@ -50,10 +50,11 @@ export default function ProductDetailPage() {
 
   if (loading) {
     return (
-      <div className="d-flex justify-content-center py-5">
+      <div className="d-flex flex-column justify-content-center align-items-center py-5 gap-3">
         <div className="spinner-border" role="status">
           <span className="visually-hidden">Loading...</span>
         </div>
+        <span className="text-muted small">Loading product...</span>
       </div>
     );
   }
@@ -89,120 +90,167 @@ export default function ProductDetailPage() {
   };
 
   return (
-    <div className="row g-4">
+    <div className="row g-4 animate-fade-in">
+      {/* Product Image */}
       <div className="col-lg-5">
-        <div className="card shadow d-flex justify-content-center align-items-center" style={{ minHeight: "500px" }}>
-          {product.thumbnail && (
+        <div
+          className="card shadow-sm d-flex justify-content-center align-items-center overflow-hidden"
+          style={{ minHeight: "400px" }}
+        >
+          {product.thumbnail ? (
             <img
               src={product.thumbnail}
               alt={product.title}
               className="rounded"
-              style={{ objectFit: "contain", height: "500px", width: "100%" }}
+              style={{ objectFit: "contain", height: "400px", width: "100%" }}
             />
+          ) : (
+            <div className="d-flex align-items-center justify-content-center text-muted">
+              <i className="bi bi-image" style={{ fontSize: "3rem" }}></i>
+            </div>
           )}
         </div>
       </div>
 
+      {/* Product Info */}
       <div className="col-lg-7">
-        <h1 className="mb-2">{product.title}</h1>
+        <span className="badge bg-secondary mb-2">{product.category}</span>
+        <h1 className="mb-2" style={{ fontSize: "1.75rem", fontWeight: 700 }}>
+          {product.title}
+        </h1>
 
-        <div className="d-flex align-items-center gap-2 mb-3">
-          <span className="badge bg-secondary">{product.category}</span>
-          {product.brand && (
-            <span className="text-muted">by {product.brand}</span>
-          )}
-        </div>
-
-        {product.rating !== null && (
-          <p className="fs-5 mb-3">
-            <span className="text-warning">{"★".repeat(Math.round(product.rating))}{"☆".repeat(5 - Math.round(product.rating))}</span>
-            <span className="text-muted ms-2">{product.rating} / 5</span>
-          </p>
+        {product.brand && (
+          <p className="text-muted mb-2">by {product.brand}</p>
         )}
 
+        {product.rating !== null && (
+          <div className="d-flex align-items-center gap-2 mb-3">
+            <span className="text-warning">
+              {"★".repeat(Math.round(product.rating))}
+              {"☆".repeat(5 - Math.round(product.rating))}
+            </span>
+            <span className="text-muted">{product.rating} / 5</span>
+          </div>
+        )}
+
+        {/* Price */}
         <div className="mb-3">
           {discountedPrice !== null ? (
-            <>
-              <span className="text-decoration-line-through text-muted me-2">
+            <div className="d-flex align-items-center gap-2 flex-wrap">
+              <span className="text-decoration-line-through text-muted">
                 ${product.price.toFixed(2)}
               </span>
-              <span className="fs-2 fw-bold text-success">
+              <span style={{ fontSize: "1.75rem", fontWeight: 700, color: "var(--success)" }}>
                 ${discountedPrice.toFixed(2)}
               </span>
-              <span className="badge bg-danger ms-2">
+              <span className="badge bg-danger">
                 -{product.discountPercentage}%
               </span>
-            </>
+            </div>
           ) : (
-            <span className="fs-2 fw-bold">${product.price.toFixed(2)}</span>
+            <span style={{ fontSize: "1.75rem", fontWeight: 700 }}>
+              ${product.price.toFixed(2)}
+            </span>
           )}
         </div>
 
-        <div className="mb-2">
-          <span className="fw-bold d-block">Stock</span>
+        {/* Stock */}
+        <div className="mb-3">
           {outOfStock ? (
-            <span className="text-danger fw-bold">Out of Stock</span>
+            <span className="badge bg-danger" style={{ fontSize: "0.8rem" }}>
+              Out of Stock
+            </span>
           ) : (
-            <span className="text-success fw-bold">
+            <span className="badge bg-success" style={{ fontSize: "0.8rem" }}>
               {product.stock} Available
             </span>
           )}
         </div>
 
-        {product.availabilityStatus && (
-          <p className="text-muted mb-2">Status: {product.availabilityStatus}</p>
-        )}
-        {product.shippingInformation && (
-          <p className="text-muted mb-2">
-            Shipping: {product.shippingInformation}
-          </p>
-        )}
-        {product.warrantyInformation && (
-          <p className="text-muted mb-2">
-            Warranty: {product.warrantyInformation}
-          </p>
-        )}
-        {product.returnPolicy && (
-          <p className="text-muted mb-3">Return Policy: {product.returnPolicy}</p>
-        )}
+        {/* Info rows */}
+        <div className="card mb-4 border-0 bg-light">
+          <div className="card-body py-3">
+            {product.availabilityStatus && (
+              <div className="d-flex align-items-center gap-2 mb-2">
+                <i className="bi bi-check-circle text-success"></i>
+                <span className="small">{product.availabilityStatus}</span>
+              </div>
+            )}
+            {product.shippingInformation && (
+              <div className="d-flex align-items-center gap-2 mb-2">
+                <i className="bi bi-truck text-primary"></i>
+                <span className="small">{product.shippingInformation}</span>
+              </div>
+            )}
+            {product.warrantyInformation && (
+              <div className="d-flex align-items-center gap-2 mb-2">
+                <i className="bi bi-shield-check text-info"></i>
+                <span className="small">{product.warrantyInformation}</span>
+              </div>
+            )}
+            {product.returnPolicy && (
+              <div className="d-flex align-items-center gap-2">
+                <i className="bi bi-arrow-return-left text-warning"></i>
+                <span className="small">{product.returnPolicy}</span>
+              </div>
+            )}
+          </div>
+        </div>
 
+        {/* Description */}
         <div className="card mb-4">
           <div className="card-body">
-            <h5 className="card-title">Description</h5>
-            <p className="card-text">{product.description}</p>
+            <h6 className="card-title fw-semibold mb-2">Description</h6>
+            <p className="card-text text-muted mb-0">{product.description}</p>
           </div>
         </div>
 
-        <div className="d-flex align-items-center gap-3 mb-4">
-          <span className="fw-bold">Quantity:</span>
-          <div className="input-group" style={{ width: "160px" }}>
-            <button
-              className="btn btn-outline-secondary"
-              style={{ minWidth: "45px" }}
-              onClick={() => setQuantity((q) => q - 1)}
-              disabled={quantity <= 1}
-            >
-              -
-            </button>
-            <span className="form-control text-center">{quantity}</span>
-            <button
-              className="btn btn-outline-secondary"
-              style={{ minWidth: "45px" }}
-              onClick={() => setQuantity((q) => q + 1)}
-              disabled={quantity >= product.stock}
-            >
-              +
-            </button>
+        {/* Quantity + Add to Cart */}
+        <div className="d-flex flex-column gap-3">
+          <div className="d-flex align-items-center gap-3">
+            <span className="fw-semibold">Quantity:</span>
+            <div className="quantity-selector">
+              <button
+                className="btn"
+                onClick={() => setQuantity((q) => q - 1)}
+                disabled={quantity <= 1}
+                aria-label="Decrease quantity"
+              >
+                <i className="bi bi-dash"></i>
+              </button>
+              <span className="quantity-value">{quantity}</span>
+              <button
+                className="btn"
+                onClick={() => setQuantity((q) => q + 1)}
+                disabled={quantity >= product.stock}
+                aria-label="Increase quantity"
+              >
+                <i className="bi bi-plus"></i>
+              </button>
+            </div>
           </div>
-        </div>
 
-        <button
-          className="btn btn-success btn-lg w-100 mt-4"
-          disabled={outOfStock || adding}
-          onClick={handleAddToCart}
-        >
-          {outOfStock ? "Out of Stock" : adding ? "Adding..." : "Add To Cart"}
-        </button>
+          <button
+            className="btn btn-success btn-lg w-100"
+            disabled={outOfStock || adding}
+            onClick={handleAddToCart}
+          >
+            {outOfStock ? (
+              <>
+                <i className="bi bi-x-circle me-1"></i> Out of Stock
+              </>
+            ) : adding ? (
+              <>
+                <span className="spinner-border spinner-border-sm me-1" role="status" />
+                Adding...
+              </>
+            ) : (
+              <>
+                <i className="bi bi-cart-plus me-1"></i> Add to Cart
+              </>
+            )}
+          </button>
+        </div>
       </div>
     </div>
   );

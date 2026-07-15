@@ -49,10 +49,11 @@ function OrdersContent() {
 
   if (loading) {
     return (
-      <div className="d-flex justify-content-center py-5">
+      <div className="d-flex flex-column justify-content-center align-items-center py-5 gap-3">
         <div className="spinner-border" role="status">
           <span className="visually-hidden">Loading...</span>
         </div>
+        <span className="text-muted small">Loading orders...</span>
       </div>
     );
   }
@@ -67,11 +68,13 @@ function OrdersContent() {
 
   if (orders.length === 0) {
     return (
-      <div className="text-center py-5">
-        <div className="fs-1 mb-3">&#128230;</div>
-        <h2>No orders yet.</h2>
-        <p className="text-muted">Your order history will appear here.</p>
-        <Link href="/products" className="btn btn-primary mt-2">
+      <div className="empty-state animate-fade-in">
+        <div className="empty-state-icon">
+          <i className="bi bi-receipt"></i>
+        </div>
+        <h2>No orders yet</h2>
+        <p>Your order history will appear here.</p>
+        <Link href="/products" className="btn btn-primary">
           Start Shopping
         </Link>
       </div>
@@ -79,21 +82,23 @@ function OrdersContent() {
   }
 
   return (
-    <div>
+    <div className="animate-fade-in">
       <h1 className="mb-4">My Orders</h1>
       {orders.map((order) => (
-        <div key={order.id} className="card mb-3">
+        <div key={order.id} className="order-card mb-3">
           <div className="card-body d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center gap-3">
             <div>
               <h5 className="card-title mb-1">Order #{order.id}</h5>
-              <p className="text-muted mb-1">
+              <p className="text-muted small mb-1">
+                <i className="bi bi-calendar3 me-1"></i>
                 {new Date(order.createdAt).toLocaleDateString("en-US", {
                   year: "numeric",
                   month: "long",
                   day: "numeric",
                 })}
               </p>
-              <p className="mb-1">
+              <p className="text-muted small mb-2">
+                <i className="bi bi-box me-1"></i>
                 {order.items.length} item{order.items.length !== 1 ? "s" : ""}
               </p>
               <OrderStatusBadge status={order.status} />

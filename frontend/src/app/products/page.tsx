@@ -109,39 +109,42 @@ export default function ProductsPage() {
   };
 
   return (
-    <div>
+    <div className="animate-fade-in">
       <h1 className="mb-4">Products</h1>
 
-      <div className="row g-3 mb-4">
-        <div className="col-md-4">
-          <SearchBar onSearch={handleSearch} />
-        </div>
-        <div className="col-md-3">
-          <CategoryFilter
-            categories={CATEGORIES}
-            selected={category}
-            onChange={handleCategoryChange}
-          />
-        </div>
-        <div className="col-md-3">
-          <SortDropdown
-            sort={sort}
-            order={order}
-            onSortChange={handleSortChange}
-          />
-        </div>
-        <div className="col-md-2">
-          <span className="form-control-plaintext text-muted">
-            {pagination.total} products
-          </span>
+      <div className="filter-toolbar">
+        <div className="row g-3 align-items-center">
+          <div className="col-md-4">
+            <SearchBar onSearch={handleSearch} />
+          </div>
+          <div className="col-md-3">
+            <CategoryFilter
+              categories={CATEGORIES}
+              selected={category}
+              onChange={handleCategoryChange}
+            />
+          </div>
+          <div className="col-md-3">
+            <SortDropdown
+              sort={sort}
+              order={order}
+              onSortChange={handleSortChange}
+            />
+          </div>
+          <div className="col-md-2 text-end">
+            <span className="text-muted small">
+              {pagination.total} products
+            </span>
+          </div>
         </div>
       </div>
 
       {loading && (
-        <div className="d-flex justify-content-center py-5">
+        <div className="d-flex flex-column justify-content-center align-items-center py-5 gap-3">
           <div className="spinner-border" role="status">
             <span className="visually-hidden">Loading...</span>
           </div>
+          <span className="text-muted small">Loading products...</span>
         </div>
       )}
 
@@ -152,8 +155,12 @@ export default function ProductsPage() {
       )}
 
       {!loading && !error && products.length === 0 && (
-        <div className="text-center py-5">
-          <p className="text-muted fs-5">No products found</p>
+        <div className="empty-state">
+          <div className="empty-state-icon">
+            <i className="bi bi-search"></i>
+          </div>
+          <h2>No products found</h2>
+          <p>Try adjusting your search or filter criteria.</p>
         </div>
       )}
 

@@ -55,10 +55,11 @@ function OrderDetailContent() {
 
   if (loading) {
     return (
-      <div className="d-flex justify-content-center py-5">
+      <div className="d-flex flex-column justify-content-center align-items-center py-5 gap-3">
         <div className="spinner-border" role="status">
           <span className="visually-hidden">Loading...</span>
         </div>
+        <span className="text-muted small">Loading order details...</span>
       </div>
     );
   }
@@ -79,10 +80,13 @@ function OrderDetailContent() {
   );
 
   return (
-    <div className="row g-4">
+    <div className="row g-4 animate-fade-in">
       <div className="col-lg-8">
-        <Link href="/orders" className="btn btn-outline-secondary mb-3">
-          &larr; Back to Orders
+        <Link
+          href="/orders"
+          className="btn btn-outline-secondary mb-3"
+        >
+          <i className="bi bi-arrow-left me-1"></i> Back to Orders
         </Link>
         <h1 className="mb-2">Order #{order.id}</h1>
         <p className="text-muted mb-4">
@@ -97,10 +101,10 @@ function OrderDetailContent() {
         </p>
 
         {order.items.map((item, index) => (
-          <div key={index} className="card mb-3">
+          <div key={index} className="cart-item mb-3">
             <div className="row g-0">
               <div className="col-md-2 d-flex align-items-center justify-content-center p-2">
-                {item.product.thumbnail && (
+                {item.product.thumbnail ? (
                   <Link href={`/products/${item.product.id}`}>
                     <img
                       src={item.product.thumbnail}
@@ -109,23 +113,30 @@ function OrderDetailContent() {
                       style={{ objectFit: "contain", width: "100px", height: "100px" }}
                     />
                   </Link>
+                ) : (
+                  <div
+                    className="rounded d-flex align-items-center justify-content-center bg-light"
+                    style={{ width: "100px", height: "100px" }}
+                  >
+                    <i className="bi bi-image text-muted"></i>
+                  </div>
                 )}
               </div>
               <div className="col-md-10">
                 <div className="card-body d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center h-100 gap-2">
                   <div>
-                    <h5 className="card-title mb-1">
+                    <h6 className="card-title mb-1">
                       <Link
                         href={`/products/${item.product.id}`}
-                        className="text-decoration-none"
+                        className="text-decoration-none text-dark"
                       >
                         {item.product.title}
                       </Link>
-                    </h5>
-                    <p className="card-text text-muted mb-0">
+                    </h6>
+                    <p className="card-text text-muted small mb-0">
                       Unit Price: ${item.price.toFixed(2)}
                     </p>
-                    <p className="card-text text-muted mb-0">
+                    <p className="card-text text-muted small mb-0">
                       Quantity: {item.quantity}
                     </p>
                   </div>
@@ -140,23 +151,20 @@ function OrderDetailContent() {
       </div>
 
       <div className="col-lg-4">
-        <div className="card sticky-top" style={{ top: "80px" }}>
+        <div className="order-summary-card sticky-top" style={{ top: "80px" }}>
           <div className="card-body">
             <h5 className="card-title mb-3">Order Summary</h5>
-            <div className="d-flex justify-content-between mb-2">
+            <div className="summary-row">
               <span>Items ({order.items.length})</span>
               <span>${subtotal.toFixed(2)}</span>
             </div>
-            <div className="d-flex justify-content-between mb-2">
+            <div className="summary-row">
               <span>Shipping</span>
-              <span className="text-success">Free</span>
+              <span className="text-success fw-semibold">Free</span>
             </div>
-            <hr />
-            <div className="d-flex justify-content-between mb-3">
-              <span className="fw-bold">Total</span>
-              <span className="fw-bold fs-5">
-                ${order.totalAmount.toFixed(2)}
-              </span>
+            <div className="summary-row total">
+              <span>Total</span>
+              <span>${order.totalAmount.toFixed(2)}</span>
             </div>
           </div>
         </div>

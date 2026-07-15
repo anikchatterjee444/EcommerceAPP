@@ -72,14 +72,14 @@ export default function Home() {
   }, []);
 
   return (
-    <>
+    <div className="animate-fade-in">
       {/* Hero */}
-      <section className="text-center py-5 mb-5">
-        <div className="py-5">
+      <section className="hero-section">
+        <div className="container">
           <h1 className="display-4 fw-bold mb-3">
             Modern E-Commerce Platform
           </h1>
-          <p className="lead text-muted mx-auto mb-4" style={{ maxWidth: "640px" }}>
+          <p className="lead">
             A full-stack e-commerce application built with Next.js, NestJS,
             Prisma, and PostgreSQL &mdash; featuring JWT authentication,
             real-time inventory management, and a streamlined checkout flow.
@@ -100,35 +100,38 @@ export default function Home() {
       {/* Featured Products */}
       {products.length > 0 && (
         <section className="mb-5">
-          <h2 className="text-center mb-4">Featured Products</h2>
+          <h2 className="section-heading">Featured Products</h2>
           <div className="row g-4">
             {products.map((product) => (
               <div key={product.id} className="col-sm-6 col-lg-3">
-                <div className="card h-100 shadow-sm">
-                  {product.thumbnail && (
-                    <img
-                      src={product.thumbnail}
-                      className="card-img-top"
-                      alt={product.title}
-                      style={{ height: "200px", objectFit: "cover" }}
-                      loading="lazy"
-                    />
-                  )}
-                  <div className="card-body d-flex flex-column">
+                <div className="product-card h-100">
+                  <div className="card-img-top-wrapper">
+                    {product.thumbnail && (
+                      <img
+                        src={product.thumbnail}
+                        className="card-img-top"
+                        alt={product.title}
+                        loading="lazy"
+                      />
+                    )}
+                  </div>
+                  <div className="card-body">
                     <span className="badge bg-secondary mb-2 align-self-start">
                       {product.category}
                     </span>
                     <h6 className="card-title">{product.title}</h6>
                     {product.rating !== null && (
-                      <p className="text-warning small mb-1">
-                        {"★".repeat(Math.round(product.rating))}{" "}
+                      <p className="product-rating small mb-1">
+                        <span className="text-warning">
+                          {"★".repeat(Math.round(product.rating))}
+                        </span>{" "}
                         <span className="text-muted">({product.rating})</span>
                       </p>
                     )}
-                    <p className="fw-bold mb-3">${product.price.toFixed(2)}</p>
+                    <p className="product-price mb-3">${product.price.toFixed(2)}</p>
                     <Link
                       href={`/products/${product.id}`}
-                      className="btn btn-outline-primary mt-auto"
+                      className="btn btn-outline-primary w-100"
                     >
                       View Details
                     </Link>
@@ -146,14 +149,16 @@ export default function Home() {
       )}
 
       {/* Features */}
-      <section className="mb-5 py-5 bg-light rounded">
-        <h2 className="text-center mb-4">Why Choose Us</h2>
+      <section className="mb-5 py-5 bg-light rounded-3">
+        <h2 className="section-heading">Why Choose Us</h2>
         <div className="row g-4">
           {features.map((f) => (
             <div key={f.title} className="col-sm-6 col-lg-3">
-              <div className="card h-100 border-0 shadow-sm text-center">
+              <div className="card feature-card h-100 border-0 shadow-sm">
                 <div className="card-body">
-                  <i className={`bi ${f.icon} fs-1 text-primary mb-3`} />
+                  <div className="feature-icon">
+                    <i className={`bi ${f.icon}`} />
+                  </div>
                   <h5 className="card-title">{f.title}</h5>
                   <p className="card-text text-muted">{f.description}</p>
                 </div>
@@ -165,7 +170,7 @@ export default function Home() {
 
       {/* Tech Stack */}
       <section className="mb-5">
-        <h2 className="text-center mb-4">Tech Stack</h2>
+        <h2 className="section-heading">Tech Stack</h2>
         <div className="d-flex flex-wrap justify-content-center gap-3">
           {techStack.map((t) => (
             <span
@@ -180,20 +185,22 @@ export default function Home() {
       </section>
 
       {/* Statistics */}
-      <section className="mb-5 py-5 bg-dark text-white rounded">
+      <section className="mb-5 py-5 bg-dark text-white rounded-3">
         <div className="row g-4 text-center">
           {stats.map((s) => (
             <div key={s.label} className="col-sm-6 col-lg-3">
-              <div className="display-6 fw-bold">{s.value}</div>
-              <div className="text-white-50">{s.label}</div>
+              <div className="stat-card">
+                <div className="stat-value">{s.value}</div>
+                <div className="stat-label">{s.label}</div>
+              </div>
             </div>
           ))}
         </div>
       </section>
 
       {/* CTA */}
-      <section className="text-center py-5 mb-5">
-        <h2 className="mb-3">Ready to Start Shopping?</h2>
+      <section className="cta-section mb-5">
+        <h2 className="mb-3 fw-bold">Ready to Start Shopping?</h2>
         <p className="text-muted mb-4">
           Browse our catalog of products and enjoy a seamless shopping experience.
         </p>
@@ -201,6 +208,6 @@ export default function Home() {
           Explore Products
         </Link>
       </section>
-    </>
+    </div>
   );
 }

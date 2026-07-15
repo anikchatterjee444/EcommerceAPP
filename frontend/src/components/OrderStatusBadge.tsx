@@ -14,5 +14,12 @@ export default function OrderStatusBadge({ status }: OrderStatusBadgeProps) {
     className: "bg-secondary",
   };
 
-  return <span className={`badge ${config.className}`}>{config.label}</span>;
+  return (
+    <span
+      className={`badge ${config.className}`}
+      style={{ fontSize: "0.75rem", padding: "0.35em 0.7em" }}
+    >
+      {config.label}
+    </span>
+  );
 }

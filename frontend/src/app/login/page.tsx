@@ -40,65 +40,78 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="row justify-content-center">
+    <div className="row justify-content-center animate-fade-in">
       <div className="col-md-6 col-lg-4">
-        <h1 className="mb-4">Login</h1>
-        <form onSubmit={handleSubmit(onSubmit)}>
-          <div className="mb-3">
-            <label htmlFor="email" className="form-label">
-              Email
-            </label>
-            <input
-              id="email"
-              type="email"
-              className={`form-control ${errors.email ? "is-invalid" : ""}`}
-              {...register("email", {
-                required: "Email is required",
-              })}
-            />
-            {errors.email && (
-              <div className="invalid-feedback">
-                {errors.email.message}
+        <div className="card shadow-sm">
+          <div className="card-body p-4">
+            <h1 className="text-center mb-4" style={{ fontSize: "1.75rem" }}>Login</h1>
+            <form onSubmit={handleSubmit(onSubmit)}>
+              <div className="mb-3">
+                <label htmlFor="email" className="form-label">
+                  Email
+                </label>
+                <input
+                  id="email"
+                  type="email"
+                  className={`form-control ${errors.email ? "is-invalid" : ""}`}
+                  placeholder="you@example.com"
+                  {...register("email", {
+                    required: "Email is required",
+                  })}
+                />
+                {errors.email && (
+                  <div className="invalid-feedback">
+                    {errors.email.message}
+                  </div>
+                )}
               </div>
-            )}
-          </div>
 
-          <div className="mb-3">
-            <label htmlFor="password" className="form-label">
-              Password
-            </label>
-            <input
-              id="password"
-              type="password"
-              className={`form-control ${errors.password ? "is-invalid" : ""}`}
-              {...register("password", {
-                required: "Password is required",
-                minLength: {
-                  value: 8,
-                  message: "Password must be at least 8 characters",
-                },
-              })}
-            />
-            {errors.password && (
-              <div className="invalid-feedback">
-                {errors.password.message}
+              <div className="mb-3">
+                <label htmlFor="password" className="form-label">
+                  Password
+                </label>
+                <input
+                  id="password"
+                  type="password"
+                  className={`form-control ${errors.password ? "is-invalid" : ""}`}
+                  placeholder="Enter your password"
+                  {...register("password", {
+                    required: "Password is required",
+                    minLength: {
+                      value: 8,
+                      message: "Password must be at least 8 characters",
+                    },
+                  })}
+                />
+                {errors.password && (
+                  <div className="invalid-feedback">
+                    {errors.password.message}
+                  </div>
+                )}
               </div>
-            )}
+
+              <button
+                type="submit"
+                className="btn btn-primary w-100"
+                disabled={submitting}
+              >
+                {submitting ? (
+                  <>
+                    <span className="spinner-border spinner-border-sm me-1" role="status" />
+                    Logging in...
+                  </>
+                ) : (
+                  "Login"
+                )}
+              </button>
+            </form>
+
+            <p className="mt-3 text-center text-muted small">
+              Don&apos;t have an account?{" "}
+              <Link href="/register">Register</Link>
+            </p>
           </div>
-
-          <button
-            type="submit"
-            className="btn btn-primary w-100"
-            disabled={submitting}
-          >
-            {submitting ? "Logging in..." : "Login"}
-          </button>
-        </form>
-
-        <p className="mt-3 text-center">
-          Don&apos;t have an account?{" "}
-          <Link href="/register">Register</Link>
-        </p>
+        </div>
       </div>
     </div>
   );
