@@ -55,6 +55,7 @@ export class AuthService {
     });
 
     // Never return the password hash to the client.
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { password, ...safeUser } = user;
 
     return {

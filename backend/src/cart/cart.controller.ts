@@ -12,6 +12,7 @@ import {
 } from '@nestjs/common';
 import type { Request } from 'express';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
+import type { JwtPayload } from '../auth/types/jwt-payload.type';
 import { CartService } from './cart.service';
 import { AddCartItemDto } from './dto/add-cart-item.dto';
 import { UpdateCartItemDto } from './dto/update-cart-item.dto';
@@ -23,14 +24,14 @@ export class CartController {
   @Get()
   @UseGuards(JwtAuthGuard)
   getCart(@Req() req: Request) {
-    const userId = (req.user as any).userId;
+    const { userId } = req.user as JwtPayload;
     return this.cartService.getCart(userId);
   }
 
   @Post('items')
   @UseGuards(JwtAuthGuard)
   addItem(@Req() req: Request, @Body() dto: AddCartItemDto) {
-    const userId = (req.user as any).userId;
+    const { userId } = req.user as JwtPayload;
     return this.cartService.addItem(userId, dto);
   }
 
@@ -41,7 +42,7 @@ export class CartController {
     @Param('productId', ParseIntPipe) productId: number,
     @Body() dto: UpdateCartItemDto,
   ) {
-    const userId = (req.user as any).userId;
+    const { userId } = req.user as JwtPayload;
     return this.cartService.updateItem(userId, productId, dto);
   }
 
@@ -51,7 +52,7 @@ export class CartController {
     @Req() req: Request,
     @Param('productId', ParseIntPipe) productId: number,
   ) {
-    const userId = (req.user as any).userId;
+    const { userId } = req.user as JwtPayload;
     return this.cartService.removeItem(userId, productId);
   }
 }

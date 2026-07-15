@@ -46,7 +46,7 @@ export class GetProductsDto {
   sort: string = 'id';
 
   @IsOptional()
-  @Transform(({ value }) => value?.toLowerCase())
+  @Transform(({ value }: { value: string }) => value?.toLowerCase())
   @IsIn(['asc', 'desc'])
   order: 'asc' | 'desc' = 'asc';
 }

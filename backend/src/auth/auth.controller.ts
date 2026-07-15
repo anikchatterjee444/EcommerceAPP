@@ -13,11 +13,10 @@ import { AuthService } from './auth.service';
 import { LoginDto } from './dto/login.dto';
 import { RegisterDto } from './dto/register.dto';
 import { JwtAuthGuard } from './guards/jwt-auth.guard';
+import type { JwtPayload } from './types/jwt-payload.type';
 
 @Controller('auth')
 export class AuthController {
-  // Controllers stay thin: validate (via DTO + ValidationPipe),
-  // delegate to the service, return the result. No business logic here.
   constructor(private readonly authService: AuthService) {}
 
   @Post('login')
@@ -35,9 +34,10 @@ export class AuthController {
   @Get('profile')
   @UseGuards(JwtAuthGuard)
   getProfile(@Req() req: Request) {
+    const user = req.user as JwtPayload;
     return {
-      userId: (req.user as any).userId,
-      email: (req.user as any).email,
+      userId: user.userId,
+      email: user.email,
     };
   }
 }

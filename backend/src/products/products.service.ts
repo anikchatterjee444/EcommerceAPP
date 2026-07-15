@@ -1,7 +1,33 @@
 import { Injectable, Logger, NotFoundException } from '@nestjs/common';
-import { Prisma, PrismaClient } from '@prisma/client';
+import { Prisma } from '@prisma/client';
 import { PrismaService } from '../prisma/prisma.service';
 import { GetProductsDto } from './dto/get-products.dto';
+
+interface DummyJsonProduct {
+  id: number;
+  title: string;
+  description: string;
+  category: string;
+  brand: string;
+  sku: string;
+  price: number;
+  discountPercentage: number;
+  rating: number;
+  stock: number;
+  weight: number;
+  warrantyInformation: string;
+  shippingInformation: string;
+  availabilityStatus: string;
+  returnPolicy: string;
+  minimumOrderQuantity: number;
+  thumbnail: string;
+  images: string[];
+  tags: string[];
+}
+
+interface DummyJsonResponse {
+  products: DummyJsonProduct[];
+}
 
 @Injectable()
 export class ProductsService {
@@ -18,7 +44,7 @@ export class ProductsService {
       throw new Error('Failed to fetch products from DummyJSON');
     }
 
-    const data = await response.json();
+    const data = (await response.json()) as DummyJsonResponse;
     const products = data.products;
 
     this.logger.log(`Found ${products.length} products.`);
