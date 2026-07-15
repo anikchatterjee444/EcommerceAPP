@@ -1,3 +1,5 @@
+import Logo from "@/components/Logo";
+
 export default function Footer() {
   const year = new Date().getFullYear();
 
@@ -6,9 +8,11 @@ export default function Footer() {
       <div className="container">
         <div className="row g-4">
           <div className="col-md-4">
-            <h5 className="mb-3">E-Commerce</h5>
+            <div className="mb-3">
+              <Logo size="sm" />
+            </div>
             <p className="small mb-0" style={{ opacity: 0.65 }}>
-              A full-stack e-commerce platform built for the MCA final project.
+              Smart Shopping, Simplified. A modern e-commerce platform built for seamless online shopping.
             </p>
           </div>
           <div className="col-md-4">
@@ -50,7 +54,7 @@ export default function Footer() {
         </div>
         <hr className="border-secondary opacity-25 my-3" />
         <p className="text-center small mb-0" style={{ opacity: 0.5 }}>
-          &copy; {year} E-Commerce. All rights reserved.
+          &copy; {year} ShopIT. All rights reserved.
         </p>
       </div>
     </footer>

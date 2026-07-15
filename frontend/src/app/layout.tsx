@@ -7,8 +7,11 @@ import Footer from "@/components/Footer";
 import ToastProvider from "@/components/ToastProvider";
 
 export const metadata: Metadata = {
-  title: "E-Commerce",
-  description: "E-Commerce Application",
+  title: "ShopIT - Smart Shopping, Simplified",
+  description: "Smart Shopping, Simplified. A modern e-commerce platform with JWT authentication, real-time inventory, and streamlined checkout.",
+  icons: {
+    icon: "/favicon.svg",
+  },
 };
 
 export default function RootLayout({

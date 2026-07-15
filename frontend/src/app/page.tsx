@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useAuth } from "@/hooks/useAuth";
 import { getProducts } from "@/services/product";
 import type { Product } from "@/types/product";
+import LogoMark from "@/components/LogoMark";
 
 const features = [
   {
@@ -76,11 +77,18 @@ export default function Home() {
       {/* Hero */}
       <section className="hero-section">
         <div className="container">
+          <div className="d-flex justify-content-center mb-4">
+            <LogoMark size={64} />
+          </div>
           <h1 className="display-4 fw-bold mb-3">
-            Modern E-Commerce Platform
+            <span style={{ color: "var(--primary)" }}>Shop</span>
+            <span style={{ color: "var(--purple)" }}>IT</span>
           </h1>
+          <p className="lead mb-4" style={{ fontStyle: "italic", color: "var(--text-muted)" }}>
+            Smart Shopping, Simplified
+          </p>
           <p className="lead">
-            A full-stack e-commerce application built with Next.js, NestJS,
+            A modern e-commerce platform built with Next.js, NestJS,
             Prisma, and PostgreSQL &mdash; featuring JWT authentication,
             real-time inventory management, and a streamlined checkout flow.
           </p>
@@ -150,7 +158,7 @@ export default function Home() {
 
       {/* Features */}
       <section className="mb-5 py-5 bg-light rounded-3">
-        <h2 className="section-heading">Why Choose Us</h2>
+        <h2 className="section-heading">Why Choose ShopIT</h2>
         <div className="row g-4">
           {features.map((f) => (
             <div key={f.title} className="col-sm-6 col-lg-3">
@@ -202,7 +210,7 @@ export default function Home() {
       <section className="cta-section mb-5">
         <h2 className="mb-3 fw-bold">Ready to Start Shopping?</h2>
         <p className="text-muted mb-4">
-          Browse our catalog of products and enjoy a seamless shopping experience.
+          Browse our catalog of products and enjoy a seamless shopping experience with ShopIT.
         </p>
         <Link href="/products" className="btn btn-primary btn-lg px-5">
           Explore Products
