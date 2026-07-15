@@ -1,82 +1,240 @@
-# E-Commerce App (Internship Project)
+# ShopIT
 
-Production-style e-commerce app built with:
+**Smart Shopping, Simplified**
 
-- **Frontend:** Next.js 16 (App Router), TypeScript, Tailwind CSS
-- **Backend:** NestJS 11, TypeScript
-- **Database:** PostgreSQL 16 via Prisma 7
-- **Auth:** bcrypt password hashing (JWT arrives in the Login sprint)
-- **Infra:** Docker Compose (PostgreSQL)
+A production-style full-stack e-commerce platform built during my internship at **Indpro**.
 
-## Structure
+## Tech Stack
 
-```
+### Frontend
+- Next.js 16 (App Router)
+- TypeScript
+- Bootstrap 5
+- Axios
+- React Hook Form
+- React Toastify
+
+### Backend
+- NestJS 11
+- TypeScript
+- Prisma ORM
+- JWT Authentication
+- bcrypt
+
+### Database
+- PostgreSQL 16
+
+### Infrastructure
+- Docker Compose
+
+---
+
+# Features
+
+## Authentication
+
+- User Registration
+- User Login
+- JWT Authentication
+- Protected Routes
+- Password Hashing (bcrypt)
+
+## Products
+
+- Product Listing
+- Product Details
+- Search
+- Category Filtering
+- Sorting
+- Pagination
+
+## Shopping Cart
+
+- Add to Cart
+- Update Quantity
+- Remove Item
+- Cart Summary
+
+## Orders
+
+- Checkout
+- Stock Validation
+- Order History
+- Order Details
+
+## User Profile
+
+- Profile Page
+- Authentication Status
+
+---
+
+# Project Structure
+
 app/
-├── backend/     NestJS API
-├── frontend/    Next.js app
+├── backend/
+│ ├── auth/
+│ ├── users/
+│ ├── products/
+│ ├── cart/
+│ ├── orders/
+│ └── prisma/
+│
+├── frontend/
+│ ├── app/
+│ ├── components/
+│ ├── context/
+│ ├── hooks/
+│ ├── services/
+│ └── types/
+│
 ├── docker-compose.yml
-├── opencode.json + .opencode/agents/   OpenCode plan/build agents
-└── AGENTS.md    Architecture rules for AI agents working on this repo
-```
+└── README.md
 
-## Architecture
+---
 
-```
-Controller -> AuthService -> UsersService -> PrismaService -> PostgreSQL
-```
+# Architecture
 
-`AuthService` never touches Prisma directly — it only knows `UsersService`.
-`PrismaService` is the single point of contact with the database.
+Frontend (Next.js)
 
-## Getting started
+↓
 
-```bash
-# 1. Start Postgres
+Axios
+
+↓
+
+NestJS REST API
+
+↓
+
+Controllers
+
+↓
+
+Services
+
+↓
+
+Prisma ORM
+
+↓
+
+PostgreSQL
+
+---
+
+# Backend Architecture
+
+Controller
+
+↓
+
+Service
+
+↓
+
+Prisma
+
+↓
+
+PostgreSQL
+
+Business logic is isolated inside Services.
+
+Prisma is the single point of database interaction.
+
+Authentication is handled using JWT Guards.
+
+---
+
+# Getting Started
+
+## 1 Start PostgreSQL
+
 docker compose up -d
 
-# 2. Backend
+## 2 Backend
+
 cd backend
-cp .env.example .env
-npm install
-npm run prisma:migrate   # creates the users table
-npm run start:dev        # http://localhost:3001
 
-# 3. Frontend (separate terminal)
+npm install
+
+npx prisma generate
+
+npx prisma db push
+
+npm run start:dev
+
+Backend
+
+http://localhost:3002
+
+## 3 Frontend
+
 cd frontend
+
 npm install
-npm run dev               # http://localhost:3000
-```
 
-## Sprint roadmap
+npm run dev
 
-| Sprint | Scope | Status |
-|---|---|---|
-| 1 | Database (Docker, Postgres, Prisma, User model) | ✅ Done |
-| 2 | Authentication (Prisma service, Users module, Register API, tests) | ✅ Scaffolded |
-| 3 | Products | ⏳ |
-| 4 | Cart | ⏳ |
-| 5 | Orders | ⏳ |
-| 6 | Frontend integration | ⏳ |
+Frontend
 
-## API — Sprint 2
+http://localhost:3000
 
-`POST /auth/register`
+---
 
-```json
-{
-  "email": "user@example.com",
-  "password": "supersecret123",
-  "name": "Optional Name"
-}
-```
+# Completed Modules
 
-Returns `201` with `{ message, user }` (no password), `409` on duplicate email,
-`400` on validation failure (e.g. password under 8 characters).
+- Authentication
+- Products
+- Product Details
+- Cart
+- Checkout
+- Orders
+- Profile
+- Landing Page
+- Responsive UI
+- Accessibility Improvements
 
-## Git workflow
+---
 
-Feature branches only, never commit to `main` directly:
+# Development Workflow
 
-```
-main -> feature/database -> PR -> merge -> feature/auth -> PR -> merge -> ...
-```
+Feature Branches
+
+main
+
+↓
+
+feature/jwt-auth
+
+↓
+
+feature/products
+
+↓
+
+feature/orders
+
+↓
+
+feature/frontend
+
+↓
+
+Pull Request
+
+↓
+
+Merge
+
+---
+
+# Future Improvements
+
+- Payment Gateway Integration
+- Wishlist
+- Product Reviews
+- Admin Dashboard
+- Email Verification
+- Inventory Dashboard
