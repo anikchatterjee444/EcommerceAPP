@@ -5,6 +5,7 @@ import { useParams } from "next/navigation";
 import { toast } from "react-toastify";
 import { getProductById } from "@/services/product";
 import { addToCart } from "@/services/cart";
+import { useRequireAuth } from "@/hooks/useRequireAuth";
 import type { Product } from "@/types/product";
 
 export default function ProductDetailPage() {
@@ -16,6 +17,7 @@ export default function ProductDetailPage() {
   const [error, setError] = useState<string | null>(null);
   const [quantity, setQuantity] = useState(1);
   const [adding, setAdding] = useState(false);
+  const { requireAuth } = useRequireAuth();
 
   useEffect(() => {
     if (!id) return;
@@ -76,6 +78,8 @@ export default function ProductDetailPage() {
       : null;
 
   const handleAddToCart = async () => {
+    if (!requireAuth()) return;
+
     setAdding(true);
     try {
       await addToCart(product.id, quantity);
