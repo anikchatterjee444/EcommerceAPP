@@ -5,9 +5,10 @@ info:
 
 http:
   method: GET
-  url: http://localhost:3000/products
+  url: http://localhost:3002/products
   auth:
     type: bearer
+    token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjIsImVtYWlsIjoiYW5pazJAZXhhbXBsZS5jb20iLCJpYXQiOjE3ODQyMDE3NTgsImV4cCI6MTc4NDI4ODE1OH0.2oMMtKGMpVOlChI3mTbB9ogotapwBLqq9WkFlfwHdGs
 
 settings:
   encodeUrl: true

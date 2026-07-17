@@ -1,0 +1,27 @@
+info:
+  name: Checkout
+  type: http
+  seq: 5
+
+http:
+  method: POST
+  url: http://localhost:3002/cart/checkout
+  headers:
+    - name: Content-Type
+      value: application/json
+  body:
+    type: json
+    data: |-
+      {
+        "shippingAddress": "123 Main St, New York, NY 10001",
+        "paymentMethod": "credit_card"
+      }
+  auth:
+    type: bearer
+    token: ""
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
